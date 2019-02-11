@@ -10,7 +10,6 @@ data_dir = os.path.join(test_modules_dir, 'data','kmers')
 class TestKmers(unittest.TestCase):
 
     def test_kmer_normal(self):
-        k = Kmers(os.path.join(data_dir,'input.fa'))
+        k = Kmers(os.path.join(data_dir,'input.fa'),4)
         kmers = k.extract_kmers()
-        self.assertEqual(kmers,{'ACGT':5,'AAAA':10})
-        
+        self.assertEqual(kmers,{'AAAA': 2, 'CAAA': 1, 'CCAA': 1, 'CCCA': 1, 'CCCC': 2})
