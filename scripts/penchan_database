@@ -5,7 +5,7 @@ import os
 import pkg_resources
 sys.path.append('../')
 sys.path.append('./')
-from pehchan.Pehchan import Pehchan
+from pehchan.PehchanDatabase import PehchanDatabase
 
 version = ''
 try:
@@ -14,19 +14,16 @@ except pkg_resources.DistributionNotFound:
 	version = 'x.y.z'
 
 parser = argparse.ArgumentParser(
-	description = 'Microorganism characterisation, classification and identification',
-	usage = 'pehchan [options] 1.fastq 2.fastq ...',
+	description = 'Create database',
+	usage = 'pehchan [options] output_directory 1.fasta 2.fasta ...',
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-
-parser.add_argument('input_files', help='Input FASTQ files (optionally gzipped)', nargs='+', type=str)
+parser.add_argument('output_directory', help='Output directory name (must not exist already)',type=str)
+parser.add_argument('input_files', help='Input FASTA files (optionally gzipped)', nargs='+', type=str)
 
 # Input
-parser.add_argument('--db_dir', '-d',  help='Base directory for species databases, defaults to bundled', type=str )
+parser.add_argument('--kmers', '-k',  help='kmer', type=int, default=11)
 parser.add_argument('--threads', '-t',  help='No. of threads to use', type=int, default=1)
-
-# Output
-parser.add_argument('--output_file', '-o',  help='Output filename, defaults to STDOUT', type=str)
 
 
 # Advanced
@@ -41,7 +38,7 @@ if options.verbose:
     pr = cProfile.Profile()
     pr.enable()
 
-    g = Pehchan(options)
+    g = PehchanDatabase(options)
     g.run()
 
     pr.disable()
@@ -51,5 +48,5 @@ if options.verbose:
     ps.print_stats()
     print(s.getvalue())
 else:
-    g = Pehchan(options)
+    g = PehchanDatabase(options)
     g.run()
