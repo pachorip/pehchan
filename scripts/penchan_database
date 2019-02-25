@@ -22,7 +22,7 @@ parser.add_argument('output_directory', help='Output directory name (must not ex
 parser.add_argument('input_files', help='Input FASTA files (optionally gzipped)', nargs='+', type=str)
 
 # Input
-parser.add_argument('--kmers', '-k',  help='kmer', type=int, default=11)
+parser.add_argument('--kmerlength', '-k',  help='kmer', type=int, default=11)
 parser.add_argument('--threads', '-t',  help='No. of threads to use', type=int, default=1)
 
 
